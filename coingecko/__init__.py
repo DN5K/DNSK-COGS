@@ -1,4 +1,4 @@
-from .cg import CoinGecko
+from .coingecko import CoinGecko
 
 
 def setup(bot):
