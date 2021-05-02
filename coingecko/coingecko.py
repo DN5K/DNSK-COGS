@@ -132,22 +132,15 @@ class CoinGecko(commands.Cog):
         vol24h = data["market_data"]["total_volume"]["usd"]
         price1h = data["market_data"]["price_change_percentage_1h_in_currency"]["usd"]
         price24h = data["market_data"]["price_change_percentage_24h_in_currency"]["usd"]
-        price7d = data["market_data"]["price_change_percentage_7d_in_currency"]["usd"]
+        price7d =
+            try:
+                data["market_data"]["price_change_percentage_7d_in_currency"]["usd"]
+            except:
+                "N/A"
         ath = data["market_data"]["ath"]["usd"]
         ath_date = data["market_data"]["ath_date"]["usd"]
         circulating_supply = data["market_data"]["circulating_supply"]
         last_updated = datetime.strptime(data["last_updated"], "%Y-%m-%dT%H:%M:%S.%fZ")
         
         # replace empty values with N/A
-        if price1h == "":
-            replace("", "N/A")
-        else:
-            pass
-        if price24h == "":
-            replace("", "N/A")
-        else:
-            pass
-        if price7d == "":
-            replace("", "N/A")
-        else:
-            pass
+        
