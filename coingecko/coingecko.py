@@ -63,7 +63,7 @@ class CoinGecko(commands.Cog):
             embed.set_thumbnail(url=image)
             embed.add_field(name="Change 1 hour " + hour_1_emoji, value=f"`{price1h}%`", inline = True)
             embed.add_field(name="Change 24 hours " + hour_24_emoji, value=f"`{price24h}%`", inline = True)
-            embed.add_field(name="Change 7 days " + days_7_emoji, value=f"`{price7d}%`\n\n\n", inline = True)
+            embed.add_field(name="Change 7 days " + days_7_emoji, value=f"`{price7d}`\n\n\n", inline = True)
             embed.add_field(name="_ _", value="_ _", inline = False)
             embed.add_field(name="Market Cap  :moneybag:", value=f"`${market_cap:,.0f}`\n\n", inline = True)
             embed.add_field(name="24 Hour Volume  :calendar:", value=f"`${vol24h:,.0f}`\n\n", inline = True)
@@ -136,7 +136,7 @@ class CoinGecko(commands.Cog):
         price1h = data["market_data"]["price_change_percentage_1h_in_currency"]["usd"]
         price24h = data["market_data"]["price_change_percentage_24h_in_currency"]["usd"]
         try:
-            price7d = data["market_data"]["price_change_percentage_7d_in_currency"]["usd"]
+            price7d = data["market_data"]["price_change_percentage_7d_in_currency"]["usd"]"%"
         except:
             price7d = "N/A"
         ath = data["market_data"]["ath"]["usd"]
