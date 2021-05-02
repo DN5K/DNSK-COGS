@@ -1,3 +1,4 @@
+# Import CoinGeckoAPI
 from pycoingecko import CoinGeckoAPI
 cg = CoinGeckoAPI()
 
