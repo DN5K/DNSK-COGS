@@ -26,7 +26,7 @@ class CoinGecko(commands.Cog):
         """Ping the CoinGecko API"""
         ping = cg.ping()
         ping_response = ping["gecko_says"]
-        await ctx.send(f"**{ping_response}**")
+        await ctx.send(f"CoingGeckoAPI is up and running!\n**{ping_response}**")
 
     @commands.command()
     async def getprice(self, ctx, coin, amount: float = 1.0,):
