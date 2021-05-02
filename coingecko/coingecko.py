@@ -90,11 +90,11 @@ class CoinGecko(commands.Cog):
     
     
     
-#-#-#-#-#-# UTILITY #-#-#-#-#-# 
+#-#-#-#-#-# FUNCTIONS #-#-#-#-#-# 
     
     
     
-    # get coin data
+### get coin data
     async def getdata(self, coin):
         
         # name alias
