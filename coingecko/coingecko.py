@@ -54,7 +54,10 @@ class CoinGecko(commands.Cog):
         
         hour_1_emoji = "<:greenarrow:835522230452092969>" if price1h >= 0 else "<:redarrow:835522249942630410>"
         hour_24_emoji = "<:greenarrow:835522230452092969>" if price24h >= 0 else "<:redarrow:835522249942630410>"
-        days_7_emoji = "<:greenarrow:835522230452092969>" if price7d >= 0 else "<:redarrow:835522249942630410>"
+        if price7d == "N/A":
+            days_7_emoji = ":question:"
+        else:
+            days_7_emoji = "<:greenarrow:835522230452092969>" if price7d >= 0 else "<:redarrow:835522249942630410>"
         
         if amount == 1:
             embed.set_thumbnail(url=image)
