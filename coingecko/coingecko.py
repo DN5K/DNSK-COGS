@@ -132,11 +132,10 @@ class CoinGecko(commands.Cog):
         vol24h = data["market_data"]["total_volume"]["usd"]
         price1h = data["market_data"]["price_change_percentage_1h_in_currency"]["usd"]
         price24h = data["market_data"]["price_change_percentage_24h_in_currency"]["usd"]
-        price7d =
-            try:
-                data["market_data"]["price_change_percentage_7d_in_currency"]["usd"]
-            except:
-                "N/A"
+        try:
+            price7d = data["market_data"]["price_change_percentage_7d_in_currency"]["usd"]
+        except:
+            price7d = "N/A"
         ath = data["market_data"]["ath"]["usd"]
         ath_date = data["market_data"]["ath_date"]["usd"]
         circulating_supply = data["market_data"]["circulating_supply"]
