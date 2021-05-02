@@ -7,6 +7,7 @@ from datetime import datetime
 from redbot.core import commands
 from redbot.core.utils.chat_formatting import humanize_timedelta
 
+import asyncio
 import json
 import discord
 import dateutil.parser
@@ -20,6 +21,17 @@ class CoinGecko(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
+        self.bg_loop_task = asyncio.get_event_loop()
+        self.bg_loop_task.call_later(60, self.stoploop)
+        task = self.bg_loop_task.create_task(self.bg_loop())
+        asyncio.ensure_future(self.bg_loop())
+        self.bg_loop_task.run_forever()
+        self.bg_loop_task.run_until_complete(task)
+
+    #@commands.command()
+    async def stoploop(self):
+        loop.stop()
+
 
     @commands.command()
     async def pingcg(self, ctx):
@@ -143,6 +155,16 @@ class CoinGecko(commands.Cog):
         ath_date = data["market_data"]["ath_date"]["usd"]
         circulating_supply = data["market_data"]["circulating_supply"]
         last_updated = datetime.strptime(data["last_updated"], "%Y-%m-%dT%H:%M:%S.%fZ")
-        
-        # replace empty values with N/A
-        
+
+
+
+### loop update status
+    async def pricestatus(self):
+        await self.getdata(coin="hoge-finance")
+        await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'Hoge: ${price:}'))  
+
+    async def bg_loop(self):
+        while True:
+            await self.pricestatus()
+            #await asyncio.sleep(60)
+
