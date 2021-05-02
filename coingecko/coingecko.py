@@ -123,7 +123,7 @@ class CoinGecko(commands.Cog):
             sparkline = "false")
         
         # get values from json (data) and make them global
-        global coin_name, coin_id, image, price, market_cap, vol24h, price1h, price24h, price7d, ath, ath_date, circulating_supply, last_updated
+        global coin_id, coin_name, image, price, market_cap, vol24h, price1h, price24h, price7d, ath, ath_date, circulating_supply, last_updated
         coin_id = data["id"]
         coin_name = data["name"]
         image = data["image"]["large"]
@@ -137,3 +137,17 @@ class CoinGecko(commands.Cog):
         ath_date = data["market_data"]["ath_date"]["usd"]
         circulating_supply = data["market_data"]["circulating_supply"]
         last_updated = datetime.strptime(data["last_updated"], "%Y-%m-%dT%H:%M:%S.%fZ")
+        
+        # replace empty values with N/A
+        if price1h == "":
+            replace("", "N/A")
+        else:
+            pass
+        if price24h == "":
+            replace("", "N/A")
+        else:
+            pass
+        if price7d == "":
+            replace("", "N/A")
+        else:
+            pass
