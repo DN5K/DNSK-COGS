@@ -33,11 +33,11 @@ class CoinGecko(commands.Cog):
         """Fetch the price of a Coin"""
 
         # trigger get data for coin
-        try:
-            await self.getdata(coin)
-        except:
-            await ctx.send("Something went wrong. Make sure to use a proper coin ID!")
-            return None
+        #try:
+        await self.getdata(coin)
+        #except:
+        #    await ctx.send("Something went wrong. Make sure to use a proper coin ID!")
+        #    return None
 
         # setup embed
         calc = price*amount
