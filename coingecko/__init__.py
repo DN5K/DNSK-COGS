@@ -1,5 +1,8 @@
 from .coingecko import CoinGecko
 
+from redbot.core.bot import Red
 
-def setup(bot):
-    bot.add_cog(CoinGecko(bot))
+async def setup(bot: Red) -> None:
+    cog = CoinGecko(bot)
+    await cog.initialize()
+    bot.add_cog(cog)

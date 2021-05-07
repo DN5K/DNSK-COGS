@@ -2,17 +2,19 @@
 from pycoingecko import CoinGeckoAPI
 cg = CoinGeckoAPI()
 
-from datetime import datetime
-
-from redbot.core import commands
-from redbot.core.utils.chat_formatting import humanize_timedelta
-
-import asyncio
 import json
 import discord
 import dateutil.parser
+import logging
+import asyncio
+import time
 
+from datetime import datetime
 
+from redbot.core import Config, commands
+from redbot.core.utils.chat_formatting import humanize_timedelta
+
+log = logging.getLogger("red.dsnk-cogs.coingecko")
 
 class CoinGecko(commands.Cog):
     """CoinGecko for RedBot"""
@@ -21,17 +23,37 @@ class CoinGecko(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
-        self.bg_loop_task = asyncio.get_event_loop()
-        self.bg_loop_task.call_later(60, self.stoploop)
-        task = self.bg_loop_task.create_task(self.bg_loop())
-        asyncio.ensure_future(self.bg_loop())
-        self.bg_loop_task.run_forever()
-        self.bg_loop_task.run_until_complete(task)
+        self.bg_loop_task = None
 
-    #@commands.command()
-    async def stoploop(self):
-        loop.stop()
+    async def initialize(self):
+        self._enable_bg_loop()
 
+    def _enable_bg_loop(self):
+        self.bg_loop_task = self.bot.loop.create_task(self.bg_loop())
+        
+        def error_handler(fut: asyncio.Future):
+            try:
+                fut.result()
+            except asyncio.CancelledError:
+                pass
+            except Exception as exc:
+                log.exception(
+                    "Unexpected exception occurred in background loop of RemindMe: ",
+                    exc_info=exc,
+                )
+                asyncio.create_task(
+                    self.bot.send_to_owners(
+                        "An unexpected exception occurred in the background loop of CoinGecko.\n"
+                        "Tasks will not be run until the cog is reloaded.\n"
+                        "Check your console or logs for details, and consider opening a bug report for this."
+                    )
+                )
+
+        self.bg_loop_task.add_done_callback(error_handler)
+
+    def cog_unload(self):
+        if self.bg_loop_task:
+            self.bg_loop_task.cancel()
 
     @commands.command()
     async def pingcg(self, ctx):
@@ -158,13 +180,13 @@ class CoinGecko(commands.Cog):
 
 
 
-### loop update status
-    async def pricestatus(self):
-        await self.getdata(coin="hoge-finance")
-        await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'Hoge: ${price:}'))  
-
+### loop
     async def bg_loop(self):
+        await self.bot.wait_until_ready()
         while True:
             await self.pricestatus()
-            #await asyncio.sleep(60)
+            await asyncio.sleep(10)
 
+    async def pricestatus(self):
+        await self.getdata(coin="hoge-finance")
+        await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'Hoge: ${price:}'))
