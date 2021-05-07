@@ -185,7 +185,7 @@ class CoinGecko(commands.Cog):
         await self.bot.wait_until_ready()
         while True:
             await self.pricestatus()
-            await asyncio.sleep(10)
+            await asyncio.sleep(60)
 
     async def pricestatus(self):
         await self.getdata(coin="hoge-finance")
