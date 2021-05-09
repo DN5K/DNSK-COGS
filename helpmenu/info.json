@@ -1,0 +1,13 @@
+{
+    "author": [
+        "DNSK"
+    ],
+    "install_msg": "Usage: `[p]help HelpMenu`",
+    "name": "HelpMenu",
+    "short": "Help Menu for Hoge.",
+    "description": "Reaction based Help Menu for all kinds of topics.",
+    "tags": [
+        "utility"
+    ],
+    "end_user_data_statement": "This cog does not persistently store any data or metadata about users."
+}
