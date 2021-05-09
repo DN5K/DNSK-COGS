@@ -50,10 +50,17 @@ class HelpMenu(commands.Cog):
                 await message.delete()
         
         async def mainmenu(ctx, pages, controls, message, page, timeout, emoji):
+            # delete previous menu
+            with contextlib.suppress(discord.NotFound):
+                await message.delete()
+            # send embed main menu
             await menu(ctx, pages=embeds_main, controls=menu_base, message=None, page=0, timeout=300)
         
         
         async def page_one(ctx, pages, controls, message, page, timeout, emoji):
+            # delete previous menu
+            with contextlib.suppress(discord.NotFound):
+                await message.delete()
             # build embed
             embed_pages.clear_fields()
             embed_pages.add_field(name=":one: **__Introduction__**", value="This is a basic introduction. blab lab lblalbal", inline = False)
@@ -62,6 +69,9 @@ class HelpMenu(commands.Cog):
             await menu(ctx, pages=embeds_pages, controls=menu_page, message=None, page=0, timeout=300)
         
         async def page_two(ctx, pages, controls, message, page, timeout, emoji):
+            # delete previous menu
+            with contextlib.suppress(discord.NotFound):
+                await message.delete()
             # build embed
             embed_pages.clear_fields()
             embed_pages.add_field(name="Test2", value="This shows you stuff about Y", inline = False)
@@ -70,6 +80,9 @@ class HelpMenu(commands.Cog):
             await menu(ctx, pages=embeds_pages, controls=menu_page, message=None, page=0, timeout=300)
         
         async def page_three(ctx, pages, controls, message, page, timeout, emoji):
+            # delete previous menu
+            with contextlib.suppress(discord.NotFound):
+                await message.delete()
             # build embed
             embed_pages.clear_fields()
             embed_pages.add_field(name="Test3", value="This shows you stuff about Z", inline = False)
